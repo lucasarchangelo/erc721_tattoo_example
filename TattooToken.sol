@@ -31,6 +31,10 @@ contract TattooToken is ERC721, Ownable {
     }
 
     function claimNFT(string memory _email, uint256 _tokenId) public {
+        TattooProperties memory tattooProperties = nftHolderAttributes[
+            _tokenId
+        ];
+        string memory email = tattooProperties.email;
         require(keccak256(abi.encodePacked(email)) == keccak256(abi.encodePacked("")), "This NFT was already claimed.");
         require(msg.sender == ownerOf(_tokenId), "You're not the owner");
         nftHolderAttributes[_tokenId].email = _email;
